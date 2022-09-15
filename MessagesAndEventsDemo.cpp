@@ -3,8 +3,11 @@ class CMainFrame : public CFrameWnd {
 public:
     CMainFrame();
 protected:
-    // Step 1 ? To create ON_WM_CREATE, add afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct); before the DECLARE_MESSAGE_MAP()
+    // Step 1 : To create ON_WM_CREATE, add afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct); before the DECLARE_MESSAGE_MAP()
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    
+    afx_msg void OnFileNew();
+    
     DECLARE_MESSAGE_MAP()
 };
 
@@ -14,7 +17,7 @@ CMainFrame::CMainFrame() {
         CRect(120, 100, 700, 480), NULL);
 }
 
-// Step 3 ? Implementation of OnCreate()
+// Step 3 : Implementation of OnCreate()
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     // Call the base class to create the window
@@ -29,14 +32,22 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     return -1;
 }
 
+void CMainFrame::OnFileNew()
+{
+    // Create New file
+}
+
 class CMessagesApp : public CWinApp {
 public:
     BOOL InitInstance();
 };
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
-    // Step 2 ? Add the ON_WM_CREATE() after the BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd) and before END_MESSAGE_MAP()
+    // Step 2 : Add the ON_WM_CREATE() after the BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd) and before END_MESSAGE_MAP()
     ON_WM_CREATE()
+
+    ON_COMMAND(ID_FILE_NEW, CMainFrame::OnFileNew)
+
 END_MESSAGE_MAP()
 BOOL CMessagesApp::InitInstance() {
     m_pMainWnd = new CMainFrame;
