@@ -7,6 +7,9 @@ protected:
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
     
     afx_msg void OnFileNew();
+
+    // Pressing a key causes a WM_KEYDOWN or WM_SYSKEYDOWN message to be placed in the thread message.
+    afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
     
     DECLARE_MESSAGE_MAP()
 };
@@ -37,6 +40,25 @@ void CMainFrame::OnFileNew()
     // Create New file
 }
 
+
+// Keyboard 메시지 처리
+void CMainFrame::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
+    switch (nChar) {
+
+    case VK_RETURN:
+        MessageBox(L"You pressed Enter");
+        break;
+    case VK_F1:
+        MessageBox(L"Help is not available at the moment");
+        break;
+    case VK_DELETE:
+        MessageBox(L"Can't Delete This");
+        break;
+    default:
+        MessageBox(L"Whatever");
+    }
+}
+
 class CMessagesApp : public CWinApp {
 public:
     BOOL InitInstance();
@@ -47,6 +69,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_WM_CREATE()
 
     ON_COMMAND(ID_FILE_NEW, CMainFrame::OnFileNew)
+
+    // Keyboard Message
+    ON_WM_KEYDOWN()
 
 END_MESSAGE_MAP()
 BOOL CMessagesApp::InitInstance() {
