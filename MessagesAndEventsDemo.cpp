@@ -11,6 +11,11 @@ protected:
     // Pressing a key causes a WM_KEYDOWN or WM_SYSKEYDOWN message to be placed in the thread message.
     afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
     
+    // ON_WM_LBUTTONUP message is sent.
+    afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+    // ON_WM_TBUTTONUP message is sent.
+    afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
+
     DECLARE_MESSAGE_MAP()
 };
 
@@ -59,6 +64,20 @@ void CMainFrame::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
     }
 }
 
+// ON_WM_LBUTTONDOWN() 메시지 처리
+void CMainFrame::OnLButtonDown(UINT nFlags, CPoint point)
+{
+    CString MsgCoord;
+    MsgCoord.Format(L"Left Button at P(%d, %d)", point.x, point.y);
+    MessageBox(MsgCoord);
+}
+
+// ON_WM_RBUTTONUP() 메시지 처리
+void CMainFrame::OnRButtonUp(UINT nFlags, CPoint point)
+{
+    MessageBox(L"Right Mouse Button Up");
+}
+
 class CMessagesApp : public CWinApp {
 public:
     BOOL InitInstance();
@@ -72,6 +91,10 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 
     // Keyboard Message
     ON_WM_KEYDOWN()
+
+    // Mouse Messages
+    ON_WM_LBUTTONDOWN()
+    ON_WM_RBUTTONUP()
 
 END_MESSAGE_MAP()
 BOOL CMessagesApp::InitInstance() {
